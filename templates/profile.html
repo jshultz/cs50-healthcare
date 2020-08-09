@@ -1,0 +1,17 @@
+{% extends 'base.html' if session['user_type'] == 0 else 'staff_base.html' %}
+{% import 'helpers.html' as helpers %}
+
+{% block title %}Profile{% endblock %}
+
+{% block main %}
+<div class="card border-primary mb-3">
+    <div class="card-header">{{ (user[8], user[9], user[10],)|join(" ") }}</div>
+    <div class="card-body">
+        {{ helpers.profile_card_item("Joined", user[1]) }}
+        {{ helpers.profile_card_item("Username", user[5])}}
+        {{ helpers.profile_card_item("Email", user[7])}}
+        {{ helpers.profile_card_item("Birthday", user[11])}}
+        {{ helpers.hyperlink("edit_profile", text="Edit", icon="fa-user-edit", class="btn-secondary") }}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' if session['user_type'] == 0 else 'staff_base.html' %}
+
+{% import 'forms.html' as forms %}
+
+{% block title %}Confirm Message Action{% endblock %}
+
+{% block main %}
+<forms action="{{ url_for('message_action') }}" method="POST">
+    {{ forms.input_disable("action", "Message Action", message['action']) }}
+    {{ forms.input_disable("message_id", "Message ID", message['id']) }}
+    {{ forms.button("Confirm") }}
+</forms>
+{% endblock %}

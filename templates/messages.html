@@ -1,0 +1,43 @@
+{% extends 'base.html' if session['user_type'] != 0 else 'staff_base.html' %}
+{% import 'helpers.html' as helpers %}
+
+{% block title %}Messages{% endblock %}
+
+{% block main %}
+    <script>
+        function showMessage(messageId) {
+
+            // hide any children
+            $("#messageRightPane").children("div").remove("div");
+
+            // highlight the current message selected in the list
+            $("#messageListItem" + messageId).addClass("active");
+
+            // show the message in the right pane
+            $("#message" + messageId).clone().appendTo("#messageRightPane").removeClass("invisible");
+
+        }
+    </script>
+    <div id="messageBtnBar">
+        {{ helpers.hyperlink("/post_new_message", "New Message") }}
+    </div>
+    {% if messages|length == 0 %}
+    <div id="messageBase">
+        <img src="static/yoda_no_msg.jpg" alt="No messages you have -Yoda">
+    </div>
+    {% else %}
+        <div id="messageLeftPane">
+            <ul id="messagesList" class="list-group">
+            {% for message in messages|reverse() %}
+                {{ helpers.message_compact(message) }}
+            {% endfor %}
+            </ul>
+        </div>
+        <div id="messageRightPane">
+           <div class="no-sel-msg">No message selected</div>
+        </div>
+        {% for message in messages %}
+            {{ helpers.message_card(message) }}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

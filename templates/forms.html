@@ -1,0 +1,84 @@
+{% macro input(name, label, value="", type="text", size=20, class="form-control") -%}
+    {% if class == "form-control" %}
+        <label for="{{ name }}">{{ label ~ "*" }}</label>
+        <input name="{{ name }}" value="{{ value }}" type="{{ type }}" class="{{ class }}" size="{{ size }}" required />
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">This field is required.</div>
+    {% else %}
+        <label for="{{ name }}" class="{{ class ~ -label }}">{{ label ~ "*" }}</label>
+        <input name="{{ name }}" value="{{ value }}" type="{{ type }}" class="{{ class ~ -input }}" size="{{ size }}" required />
+        <div class="valid-feedback">Valid.</div>
+        <div class="invalid-feedback">This field is required.</div>
+    {% endif %}
+{% endmacro %}
+
+{% macro input_opt(name, label, value="value", type="text", size=20, class="form-control") -%}
+    {% if class == "form-control" %}
+        <label for="{{ name }}">{{ label }}</label>
+        <input name="{{ name }}" value="{{ value }}" type="{{ type }}" class="{{ class }}" size="{{ size }}" />
+    {% else %}
+        <label for="{{ name }}" class="{{ class ~ -label }}">{{ label }}</label>
+        <input name="{{ name }}" value="{{ value }}" type="{{ type }}" class="{{ class ~ -input }}" size="{{ size }}" />
+    {% endif %}
+{% endmacro %}
+
+{% macro input_disable(name, label, value, type="text", class="form-control") -%}
+    <label for="{{ name }}">{{ label }}</label>
+    <input name="{{ name }}" value="{{ value }}" type="{{ type }}" class="{{ class }}" size="{{ size }}" disabled />
+{% endmacro %}
+
+{% macro input_hidden(name, value) -%}
+    <input name="{{ name }}" value="{{ value }}" type="hidden">
+{% endmacro %}
+
+{%- macro textarea(name, label, rows=10, cols=40) -%}
+    <div class="form-group">
+        <label for="{{ name }}">{{ label }}</label>
+        <textarea name="{{ name }}" rows="{{ rows }}" cols="{{ cols }}" class="form-control"></textarea>
+    </div>
+{%- endmacro %}
+
+{%- macro check(name, label, accept=False) -%}
+    {% if required %}
+        <div class="form-check">
+            <label for="name" class="form-check-label">
+                <input name="{{ name }}" type="checkbox" class="form-check-input" required />{{ label }}
+                <div class="valid-feedback">Accepted.</div>
+                <div class="invalid-feedback">Please accept terms.</div>
+            </label>
+        </div>
+    {% else %}
+        <div class="custom-control custom-checkbox">
+            <input name="{{ name }}" id="{{ name }}" type="checkbox" class="custom-control-input" />
+            <label class="custom-control-label" for="{{ name }}">{{ label }}</label>
+        </div>
+    {% endif %}
+{%- endmacro %}
+
+{% macro radio(name, value, label) -%}
+    <div class="custom-control custom-radio">
+        <input id="{{ value }}" name="{{ name }}" type="radio" class="custom-control-input" value="{{ value }}">
+        <label for="{{ value }}" id="{{ value }}" class="custom-control-label">{{ " " ~ label }}</label>
+    </div>
+{% endmacro %}
+
+{% macro radio_fa_icon(name, value, label, icon_class) -%}
+    <div class="custom-control custom-radio">
+        <input id="{{ value }}" name="{{ name }}" type="radio" class="custom-control-input" value="{{ value }}">
+        <label for="{{ value }}" id="{{ value }}" class="custom-control-label"><span class="fas {{ icon_class }}"></span>{{ " " ~ label }}</label>
+    </div>
+{% endmacro %}
+
+{% macro select(name, label, opt_list) -%}
+    <label for="{{ name }}">{{ label }}*</label>
+    <select id="{{ name }}" name="{{ name }}" class="custom-select">
+        <option value="-1" selected disabled>Select an option...</option>
+        {% for option in opt_list %}
+        <option value="{{ option[0] }}">{{ option[1] }}</option>
+        {% endfor %}
+    </select>
+{% endmacro %}
+
+{% macro button(text, type="submit", class="btn btn-primary") -%}
+    <button type="{{ type }}" class="{{ class }}">{{ text }}</button>
+{% endmacro %}

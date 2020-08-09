@@ -1,0 +1,116 @@
+nav .navbar-brand
+{
+    /* size for the brand */
+    font-size: x-large;
+}
+
+main .form-control
+{
+    /* center from controls */
+    display: inline-block;
+}
+
+div .btn-group-vertical
+{
+    height: 25%;
+    width: 60px;
+    position: fixed;
+    left: 0;
+    top: 200;
+    overflow-x: hidden;
+}
+
+/* Messages */
+div .container-fluid
+{
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+div #messageBtnBar {
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+div #messageBase {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+div #messageLeftPane
+{
+    display: inline-block;
+    width: 49%;
+}
+
+div #messageRightPane
+{
+    display: inline-block;
+    width: 49%;
+}
+
+div .no-sel-msg
+{
+    display: table-cell;
+    vertical-align: middle;
+    width: 420px;
+    height: 300px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+}
+
+ul .list-group
+{
+    padding: 50px;
+    cursor: hand;
+}
+
+i .fas
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+
+.fa-info-circle {
+    color: blue;
+}
+
+.fa-exclamation {
+    color: red;
+}
+
+.fa-exclamation-circle {
+    color: red;
+}
+
+label
+{
+    float: left;
+}
+
+main
+{
+    /* scroll horizontally as needed */
+    overflow-x: auto;
+
+    /* center contents */
+    text-align: center;
+}
+
+main img
+{
+    /* constrain images on small screens */
+    max-width: 100%;
+}
+
+#quickbar
+{
+    /* lock the quickbar to the left side of the page */
+    position: fixed;
+    height: 80px;
+    top: 20%;
+}

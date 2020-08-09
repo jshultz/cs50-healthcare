@@ -1,0 +1,71 @@
+{% extends 'base.html' if session['user_type'] == 0 else 'staff_base.html' %}
+
+{% import 'forms.html' as forms %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block main %}
+<form action="{{ url_for('edit_profile') }}" method="POST">
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.input("username", "Username") }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.input("password", "Password", "password") }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.input("confirm", "Confirm", "password") }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.input("first-name", "First name") }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.input_opt("middle-name", "Middle name") }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.input("last-name", "Last name") }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ forms.input("address1", "Address #1") }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ forms.input_opt("address2", "Address #2") }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.input("city", "City") }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.select("state", "State", us_state) }}
+        </div>
+        <div class="form-group col-md-4">
+            {{ forms.input("zip-code", "Zip code", "text", 5) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            {{ forms.input_opt("home-phone", "Home phone", "tel", size=10) }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.input_opt("work-phone", "Work phone", "tel", size=10) }}
+        </div>
+        <div class="col-md-4">
+            {{ forms.input("cell-phone", "Cell phone", "tel", size=10) }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {{ forms.radio("gender", "male", " Male") }}
+            {{ forms.radio("gender", "female", " Female") }}
+        </div>
+    </div>
+    {{ forms.button("Save") }}
+</form>
+{% endblock %}

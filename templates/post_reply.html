@@ -1,0 +1,23 @@
+{% extends "base.html" if session['user_type'] != 100 else 'staff_base.html' %}
+{% import "forms.html" as forms %}
+
+{% block title %}Post Reply{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('post_reply') }}" method="POST">
+        {{ forms.input_disable("receipient", "Recipient", message['receipient']) }}
+        {{ forms.input_hidden("receipient_id", message['id']) }}
+        {{ forms.input("subject", "Subject", value="RE: " ~ message['subject']) }}
+        <div class="form-check-inline">
+            {{ forms.radio_fa_icon("priority", "0", "Normal", "fa-info-circle") }}
+        </div>
+        <div class="form-check-inline">
+            {{ forms.radio_fa_icon("priority", "1", "Important", "fa-exclamation") }}
+        </div>
+        <div class="form-check-inline">
+            {{ forms.radio_fa_icon("priority", "2", "Urgent", "fa-exclamation-circle") }}
+        </div>
+        {{ forms.textarea("body", "Message", 20, 80) }}
+        {{ forms.button("Post") }}
+    </form>
+{% endblock %}

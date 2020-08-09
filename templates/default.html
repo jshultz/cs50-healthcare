@@ -1,0 +1,14 @@
+{% extends 'base.html' if session['user_type'] != 0 else 'staff_base.html' %}
+{% import 'helpers.html' as helpers %}
+
+{% block title %}{{ 'Home' if session['user_type'] != 100 else 'Admin Control Panel' }}{% endblock %}
+
+{% block main %}
+<h1>Welcome {{ (session['user_fullname'][0], session['user_fullname'][1])|join(' ') }}!</h1>
+    {% if session['user_type'] %}
+    <div id="quickbar" class="btn-group-vertical">
+        {{ helpers.hyperlink("/add_staff", icon="fa-user-plus", class="btn-primary") }}
+        {{ helpers.hyperlink("/assign_provider", icon="fa-people-arrows", class="btn-primary") }}
+    </div>
+    {% endif %}
+{% endblock %}

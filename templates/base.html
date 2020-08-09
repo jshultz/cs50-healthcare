@@ -1,0 +1,68 @@
+{% import "helpers.html" as helpers %}
+<html lang="en"> <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- documentation at http://getbootstrap.com/docs/4.1/, alternative themes at https://bootswatch.com/ -->
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/cerulean/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">-->
+
+    <link href="static/styles.css" rel="stylesheet">
+
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon"> <script src="https://kit.fontawesome.com/060e7c2c6d.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+    <title>{% block title %}Home{% endblock %} | Emerald Valley Clinic</title>
+
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+                <a class="navbar-brand" href="/"><img src="{{ url_for('static', filename='logo.png') }}" alt="Logo"> Emerald Valley Clinic</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse">
+                    {% if session['user_id'] %}
+                    <ul class="navbar-nav mr-auto mt-2">
+                        {{ helpers.nav_link("messages", "Messages") }}
+                    </ul>
+                    <ul class="navbar-nav ml-auto mt-2">
+                        {{ helpers.nav_link("profile", session['user_fullname']|join(' ')) }}
+                        {{ helpers.nav_link("logout", "Logout") }}
+                    </ul>
+                    {% else %}
+                    <ul class="navbar-nav ml-auto mt-2">
+                        {{ helpers.nav_link("register", "Register") }}
+                        {{ helpers.nav_link("login", "Login") }}
+                    </ul>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div class="container p-5">
+                {% with sys_messages = get_flashed_messages(with_categories=true) %}
+                {% if sys_messages %}
+                {% for category, message in sys_messages %}
+                    {% if category == 'error' %}
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+                    {% endif %}
+                    {% if category == 'info' %}
+                <div class="alert alert-success alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    {{ message }}
+                </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                {% endwith %}
+                {% block main %}
+                {% endblock %}
+            </div>
+        </main>
+    </body>
+</html>

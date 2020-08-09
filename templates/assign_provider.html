@@ -1,0 +1,22 @@
+{% extends "base.html"if session['user_type'] != 0 else 'staff_base.html' %}
+{% import "forms.html" as forms %}
+
+{% block title %}Assign Provider {% endblock %}
+
+{% block navbar %}
+    {% include "staff_navbar.html" %}
+{% endblock %}
+
+{% block main %}
+<form action="/assign_provider" method="POST">
+    <div class="row">
+        <div class="col-md-6">
+            {{ forms.select("patients", "Patients", patients) }}
+        </div>
+        <div class="col-md-6">
+            {{ forms.select("patients", "Patients", providers) }}
+        </div>
+    </div>
+    {{ forms.button("Assign") }}
+</form>
+{% endblock %}

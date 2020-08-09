@@ -1,0 +1,105 @@
+{% macro alert_dismiss(alert, severity="alert-primary") -%}
+    <div class="alert {{ severity }} alert-dissmissable">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        {{ alert }}
+    </div>
+{% endmacro %}
+
+{% macro alert(alert, severity="alert-primary") -%}
+    <div class="alert {{ severity }}">
+        {{ alert }}
+    </div>
+{% endmacro %}
+
+{% macro nav_link(url, text) -%}
+    <li class="nav-item"><a class="nav-link" href="{{ url_for(url) }}">{{ text }}</a></li>
+{% endmacro %}
+
+{% macro hyperlink(url, text="none", icon="none", class="btn btn-primary") -%}
+    {% if icon != "none" %}
+    {% set icon_elem %}
+    <span class="fa {{ icon }}"></span>
+    {% endset %}
+    {% else %}
+    {% set icon_elem %}
+    {% endset %}
+    {% endif %}
+    {% if text != "none" %}
+    <a href="{{ url }}" class="btn {{ class }}">{{ icon_elem }}{{ text }}</a>
+    {% else %}
+    <a href="{{ url }}" class="btn {{ class }}">{{ icon_elem }}</a>
+    {% endif %}
+{% endmacro %}
+
+{% macro message_compact(message) -%}
+    {% if message[2] == 1 %}
+        {% set priority_icon %}
+            <span class="fas fa-exclaimation"></span>
+        {% endset %}
+    {% elif message[2] == 2 %}
+        {% set priority_icon %}
+            <span class="fas fa-exclaimation-circle"></span>
+        {% endset %}
+    {% else %}
+        {% set priority_icon %}{% endset %}
+    {% endif %}
+    {% if message[2] %}
+        <li id="messageListItem{{ message[0] }}" class="list-group-item list-group-item-primary" onclick="showMessage({{ message[0] }});"><strong>{{ message[7] }}</strong> {{ message[1] }} {{ priority_icon }}</li>
+    {% else %}
+        <li id="messagelistItem{{ message[0] }}" class="list-group-item" onclick="showMessage({{ message[0] }});">{{ (message[7], message[1],)|join(" ") }}{{ priority_icon }}</li>
+    {% endif %}
+{% endmacro %}
+
+{% macro message_card(message) -%}
+    {% set alias = "Admin" if message[9] == 100 else (message[11], message[10])|join(", ") %}
+    {% if message[2] == 1 %}
+    <div id="message{{ message[0] }}" class="card border-primary mb-3 invisible">
+        <div class="card-header">
+            <h4 class="card-title">{{ message[7] }}</h4>
+        </div>
+        <div class="card-body">
+            <span class="fas fa-envelope"></span>
+            <div class="btn-group">
+                {% if message[9] != 100 %}
+                {{ hyperlink("/post_reply?m=" ~ message[0], "Reply", class="btn-primary", icon="fa-reply") }}
+                {% endif %}
+                {{ hyperlink("/message_action?a=mark_read&m=" ~ message[0], "Mark Read", class="btn-primary", icon="fa-envelope-open") }}
+                {# omit if message is archived #}
+                {% if not message[4] %}
+                {{ hyperlink("/message_action?a=archive&m=" ~ message[0], "Archive", class="btn-success", icon="fa-archive") }}
+                {% endif %}
+                {{ hyperlink("/message_action?a=delete&m=" ~ message[0], "Delete", class="btn-danger", icon="fa-trash") }}
+            </div>
+            <p>Sent: {{ message[1] }}</br>From: {{ alias }}</p>
+            </br>
+            <p>{{ message[8] }}</p>
+        </div>
+    </div>
+    {% else %}
+    <div id="message{{ message[0] }}" class="card border-primary mb-3 invisible">
+        <div class="card-header">
+            <h4 class="card-title">{{ message[6] }}</h4>
+        </div>
+        <div class="card-body">
+            <div class="btn-group">
+                {% if message[9] != 100 %}
+                {{ hyperlink("/post_reply?m=" ~ message[0], "Reply", "btn-primary", "fa-reply") }}
+                {% endif %}
+                {{ hyperlink("/message_action?a=mark_unread?m=" ~ message[0], "Mark Unread", "btn-primary", "fa-envelope") }}
+                {# omit if message is archived #}
+                {% if not message[4] %}
+                {{ hyperlink("/message_action?a=archive?m=" ~ message[0], "Archive", "btn-success", "fa-archive") }}
+                {% endif %}
+                {{ hyperlink("/message_action?a=delete?m=" ~ message[0], "Delete", "btn-danger", "fa-trash") }}
+            </div>
+            <p class="text-right">Sent: {{ message[1] }}</br>From: {{ alias }}</p>
+            </br>
+            <p class="text-left">{{ message[7] }}</p>
+        </div>
+    </div>
+    {% endif %}
+{% endmacro %}
+
+{% macro profile_card_item(label, value) -%}
+    <p class="text-left">{{ (label, value,)|join(": ") }}</p>
+{% endmacro %}

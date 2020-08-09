@@ -1,0 +1,8 @@
+{% extends 'base.html' if session['user_type'] != 0 else 'staff_base.html' %}
+{% block title %}Error {{ top }}{% endblock %}
+
+{% block main %}
+    <img alt="{{ top }}" class="border" src="http://memegen.link/custom/{{ top | urlencode }}/{{ bottom | urlencode }}.jpg?alt=https://i.imgur.com/uHaRa2kb.jpg" title="{{ top }}">
+    <br>
+    <a href="/">Return Home</a>
+{% endblock %}

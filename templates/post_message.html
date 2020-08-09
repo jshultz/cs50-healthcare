@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% import "forms.html" as forms %}
+
+{% block title %}Post New Message{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('post_new_message') }}" method="POST">
+        {{ forms.select("receipient", "Receipient", receipients) }}
+        {{ forms.input("subject", "Subject") }}
+        <div class="form-check-inline">
+            {{ forms.radio_fa_icon("priority", "0", "Normal", "fa-info-circle") }}
+        </div>
+        <div class="form-check-inline">
+            {{ forms.radio_fa_icon("priority", "1", "Important", "fa-exclamation") }}
+        </div>
+        <div class="form-check-inline">
+            {{ forms.radio_fa_icon("priority", "2", "Urgent", "fa-exclamation-circle") }}
+        </div>
+        {{ forms.textarea("body", "Message", 20, 80) }}
+        {{ forms.button("Post") }}
+    </form>
+{% endblock %}
